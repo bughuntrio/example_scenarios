@@ -1,0 +1,30 @@
+name: Simple Scenario
+category: Examples
+executor:
+  type: docker
+  conf:
+    ram: 256
+    flags:
+      webserver:
+        - Root
+conf:
+  # Expose port 8000/tcp via the reverse web proxy
+  expose:
+    - port: 8000
+  commands:
+    - type: docker
+      spec:
+        run:
+          image: docker.io/bughuntrio/examples-simple:latest
+          name: webserver
+          # Map port 8000/tcp from the container to port 8000/tcp on the host
+          ports:
+            - 8000:8000
+  flags:
+    - type: file
+      name: Root
+      path: /flag
+      perms: 0o600
+display:
+  iframe: https://scenario.bughuntr.net/
+  forceload: true
